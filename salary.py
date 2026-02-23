@@ -7,14 +7,15 @@ def total_salary(path):
     try:
         with open(path, "r", encoding="utf-8") as file:
             for line in file:
-                name, salary = line.strip().split(",")
-                total += int(salary)
-                count += 1
+                try:
+                    _, salary = line.strip().split(",")
+                    total += int(salary)
+                    count += 1
+                except ValueError:
+                    # Skip malformed rows and continue with valid data.
+                    continue
     except FileNotFoundError:
         print("File not found")
-        return 0, 0
-    except ValueError:
-        print("Invalid file format")
         return 0, 0
 
     average = total // count if count else 0
